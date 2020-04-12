@@ -9,7 +9,7 @@
 1. Edit `/media/${USER}/system-boot/network-config` to include wireless info
 (see below)
 1. `sudo touch /media/${USER}/writable/etc/wpa_supplicant/wpa_supplicant.conf`
-1. add `network` config to `wpa_supplicant.conf` file just created
+1. add a `network` config to `wpa_supplicant.conf` file just created
 1. Turn on pi, wait ~1 minute for boot
 1. login using `ssh ubuntu@<static_ip_address (declared below in netplan example)>` with password `ubuntu`
 1. Follow prompts to change password immediately, will disconnect after password is updated
@@ -18,10 +18,13 @@
 
 Following example taken directly from [netplan.io/examples#conecting-to-a-wpa-personal-wireless-network]()
 
+Edit the `system-boot/network-config` file as follows:
+
 ```yaml
 ... # existing config
   wifis:
     wlan0:
+      optional: true
       dhcp4: no
       dhcp6: no
       addresses: [192.168.0.21/24]
@@ -34,6 +37,7 @@ Following example taken directly from [netplan.io/examples#conecting-to-a-wpa-pe
 ```
 
 example `etc/wpa_supplicant/wpa_supplicant.conf`
+
 ```conf
 network={
     ssid="ssidname"
