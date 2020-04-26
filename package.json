@@ -25,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/HackerHappyHour/bootcandc/issues"
   },
-  "homepage": "https://github.com/HackerHappyHour/bootcandc#readme"
+  "homepage": "https://github.com/HackerHappyHour/bootcandc#readme",
+  "dependencies": {
+    "default-gateway": "^6.0.0",
+    "ip": "^1.1.5",
+    "yaml": "^1.9.2"
+  },
+  "type": "module"
 }
