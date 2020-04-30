@@ -1,0 +1,84 @@
+#cloud-config
+
+# The networking setup is a bit of a hack, because the cloud-init network
+# configuration doesn't support WiFi, see
+# https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html.
+
+hostname: bootcctest
+locale: C.UTF-8
+timezone: America/Chicago
+
+groups:
+  - gpio: [root,sys]
+
+users:
+  - name: chief
+    gecos: Brian Vanderbusch
+    primary_group: chief
+    groups: [adm, audio, cdrom, dialout, floppy, video, plugdev, dip, netdev, gpio]
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    plain_text_password: 'xxxxxxxx'
+    shell: /bin/bash
+    ssh_authorized_keys:
+      -  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCvBb9AftN9sebqVqdBKZBYlsLsTdfFpdKAVSSGBiJZMKcqIsXr0jKPddU7DwGQYy9ZXEeeAmJFq35DrAWDqzzZfid7WdL8APoRjHClM8baztX+z/cmgbNOcW0PAojwWhoLuq+2SvLRJ0dYJd2iJliJj3eGKNDucqlTIfsekeerlwYEociSPkUpxgUF9EnakelAkJN9CzWh7o9Lak0sjqsuW/AAVWaWZgytj+TE5EdnOWNODcbF6IFi3e9s5wR7WeJVxKzAj98mTC6L1wEhDkypF2bJKEHPaJ2m68pGx3Fs1M04v60yZQ10L+WD3Rvy+cWdDcjbndIsbO+MtNtrBozgK+lWch6W2wm5Rh1vXVRTr252T4bSUDPQs9GmKHg4zAs143HsScxEbclLZ5EHCDWmnIfEjuVjs2vJiV3/pzicDL59s617lxUvnzgS/2wY+pLq13pFrMJscS1SILHNvNl6mdGebZGWJ2VndBubE3CR45AyelTaGLTyNV8M61O4MCqZOjouzFSfyXv643Dn2lao6gMVWAypJBtWap/CwSdxVyU7DkTcvFgVeYfSQqjTXJmjmq/D1z+My42zdCaq4jzj8RCc50y5uxTuH7orfeThdm9F/Qbi8zVKFRK0IT4Ue412lDDfOhctvhXBM+FFFQPBD2lV8qha9Q5uCFdunVA7Cw== Monster - Linux Part
+
+write_files:
+  - content: |
+        network:
+          version: 2
+          wifis:
+            wlan0:
+              dhcp4: false
+              dhcp6: false
+              gateway4: xxx.xxx.x.x
+              addresses: [xxx.xxx.x.xxx/24]
+              access-points:
+                MyAP:
+                  password: "appassword"
+    path: /etc/netplan/config.yaml
+  - content: |
+        PasswordAuthentication no
+        ChallengeResponseAuthentication no
+        UsePAM yes
+        X11Forwarding yes
+        PrintMotd no
+        PrintLastLog no
+        AcceptEnv LANG LC_*
+        Subsystem sftp /usr/lib/openssh/sftp-server
+    path: /etc/ssh/sshd_config.new
+
+bootcmd: 
+  - 'systemctl disable systemd-networkd-wait-online.service'
+  - 'systemctl mask systemd-networkd-wait-online.service'
+
+runcmd:
+  - 'rm /etc/netplan/??-cloud-init.yaml'
+  - 'chmod go-r /etc/netplan/config.yaml'
+  - 'netplan apply'
+
+  # Disable optional PAM features for faster SSH login
+  - 'mv /etc/pam.d/sshd /etc/pam.d/sshd.bak'
+  - 'sed "s/^session[ \t]\+optional/#\0/" /etc/pam.d/sshd.bak > /etc/pam.d/sshd'
+
+  # Back up the SSH default config and activate the new config
+  - 'mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bak'
+  - 'mv /etc/ssh/sshd_config.new /etc/ssh/sshd_config'
+  - 'service ssh reload'
+
+  # Multi-arch support on aarch64
+  - 'dpkg --add-architecture armhf'
+
+  # Set up the WiFi country
+  - 'apt-get update'
+  - 'apt-get -y install iw'
+  - 'iw reg set US'
+  - 'mv /etc/default/crda /etc/default/crda.bak'
+  - 'echo REGDOMAIN=US > /etc/default/crda'
+
+power_state:
+  delay: "+1"
+  mode: reboot
+  message: Bye Bye
+  timeout: 120
+  condition: True
