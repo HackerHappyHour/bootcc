@@ -21,7 +21,7 @@ users:
     plain_text_password: 'xxxxxxxx'
     shell: /bin/bash
     ssh_authorized_keys:
-      -  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCvBb9AftN9sebqVqdBKZBYlsLsTdfFpdKAVSSGBiJZMKcqIsXr0jKPddU7DwGQYy9ZXEeeAmJFq35DrAWDqzzZfid7WdL8APoRjHClM8baztX+z/cmgbNOcW0PAojwWhoLuq+2SvLRJ0dYJd2iJliJj3eGKNDucqlTIfsekeerlwYEociSPkUpxgUF9EnakelAkJN9CzWh7o9Lak0sjqsuW/AAVWaWZgytj+TE5EdnOWNODcbF6IFi3e9s5wR7WeJVxKzAj98mTC6L1wEhDkypF2bJKEHPaJ2m68pGx3Fs1M04v60yZQ10L+WD3Rvy+cWdDcjbndIsbO+MtNtrBozgK+lWch6W2wm5Rh1vXVRTr252T4bSUDPQs9GmKHg4zAs143HsScxEbclLZ5EHCDWmnIfEjuVjs2vJiV3/pzicDL59s617lxUvnzgS/2wY+pLq13pFrMJscS1SILHNvNl6mdGebZGWJ2VndBubE3CR45AyelTaGLTyNV8M61O4MCqZOjouzFSfyXv643Dn2lao6gMVWAypJBtWap/CwSdxVyU7DkTcvFgVeYfSQqjTXJmjmq/D1z+My42zdCaq4jzj8RCc50y5uxTuH7orfeThdm9F/Qbi8zVKFRK0IT4Ue412lDDfOhctvhXBM+FFFQPBD2lV8qha9Q5uCFdunVA7Cw== Monster - Linux Part
+      -  ssh-rsa <key>
 
 write_files:
 #  - content: |

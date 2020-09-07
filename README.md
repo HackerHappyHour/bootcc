@@ -5,11 +5,10 @@
 1. example device is `/dev/sde`
 1. uncompress and pipe ubuntu compressed disk image to `dd` to "restore" it to usb disk
 1. `xzcat ubuntu.img.xz | sudo dd status=progress of=/dev/sde bs=4M conv=nowarn,sync`
-1. `touch /media/${USER}/system-boot/ssh` to enable ssh
-1. Edit `/media/${USER}/system-boot/network-config` to include wireless info
 (see below)
-1. `sudo touch /media/${USER}/writable/etc/wpa_supplicant/wpa_supplicant.conf`
-1. add a `network` config to `wpa_supplicant.conf` file just created
+1. Edit the network config in `writable/etc/wpa_supplicant/wpa_supplicant.conf`
+1. Edit desired details in `cloud-config/user-data`
+1. `sudo ./write-boot-configs /media/$USER`
 1. Turn on pi, wait ~1 minute for boot
 1. login using `ssh ubuntu@<static_ip_address (declared below in netplan example)>` with password `ubuntu`
 1. Follow prompts to change password immediately, will disconnect after password is updated

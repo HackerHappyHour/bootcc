@@ -11,9 +11,10 @@ version: 2
 wifis:
   wlan0:
     dhcp4: false
-    gateway4: xxx.xxx.x.x
+    dhcp6: false
+    gateway4: 192.168.1.1
     optional: false
-    addresses: [xxx.xxx.x.xxx/24]
+    addresses: [192.168.1.225/24]
     access-points:
-      MYSSID:
-        password: "myappassword"
+      'AP Name':
+        password: "********"
