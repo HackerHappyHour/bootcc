@@ -4,8 +4,8 @@
 1. get disk device map designation using `lsblk -a -d -e7`
 1. example device is `/dev/sde`
 1. uncompress and pipe ubuntu compressed disk image to `dd` to "restore" it to usb disk
-1. `xzcat ubuntu.img.xz | sudo dd status=progress of=/dev/sde bs=4M conv=nowarn,sync`
-(see below)
+1. `xzcat ubuntu.img.xz | sudo dd status=progress of=/dev/sde bs=4M conv=sync,noerror`
+1. mount the disk `sudo mount /dev/sde /media/${USER}`
 1. Edit the network config in `writable/etc/wpa_supplicant/wpa_supplicant.conf`
 1. Edit desired details in `cloud-config/user-data`
 1. `sudo ./write-boot-configs /media/$USER`
