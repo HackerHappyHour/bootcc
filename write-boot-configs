@@ -38,7 +38,7 @@ write_configs () {
 	echo "writing configs to ${dir}"
 	copy_system_boot $dir
 	copy_writable $dir
-	unmount_bootcc $dir
+	#unmount_bootcc $dir
 }
 
 unmount_bootcc () {
