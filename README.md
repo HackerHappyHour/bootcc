@@ -1,3 +1,9 @@
+# BootCC
+
+This is an automation I wrote to help me load up fresh versions of Ubuntu-server on RPi 4, _without requiring ethernet or a monitor_, so I could atomically test builds of [octoprint/octoprint docker image](https://github.com/OctoPrint/octoprint-docker). I may expand this some day to a GUI tool, but for now, it's scripted enough to work every time and you just have to "fill in the blanks" so to speak, of your own network details and desired hostname.
+
+Steps to follow are below.
+
 ### Steps
 1. insert usb disk
 1. download ubuntu image
@@ -9,7 +15,7 @@
 1. Edit the network config in `writable/etc/wpa_supplicant/wpa_supplicant.conf`
 1. Edit desired details in `cloud-config/user-data`
 1. `sudo ./write-boot-configs /media/$USER`
-1. Turn on pi, wait ~1 minute for boot
+1. Turn on pi, wait ~5 minutes for boot
 1. login using `ssh ubuntu@<static_ip_address (declared below in netplan example)>` with password `ubuntu`
 1. Follow prompts to change password immediately, will disconnect after password is updated
 1. log back in using `ssh ubuntu@<static_ip_address>` with the new password, and voila!
