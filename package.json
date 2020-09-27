@@ -1,0 +1,35 @@
+{
+  "name": "@h3/bootcandc",
+  "version": "1.0.0",
+  "description": "Configure ubuntu boot for raspberrypi and similar boards",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HackerHappyHour/bootcandc.git"
+  },
+  "keywords": [
+    "ubuntu",
+    "raspberry-pi",
+    "rpi",
+    "boot",
+    "cloud-init"
+  ],
+  "author": "Brian Vanderbusch <chief@hackerhappyhour.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HackerHappyHour/bootcandc/issues"
+  },
+  "homepage": "https://github.com/HackerHappyHour/bootcandc#readme",
+  "dependencies": {
+    "default-gateway": "^6.0.0",
+    "ip": "^1.1.5",
+    "yaml": "^1.9.2"
+  },
+  "type": "module"
+}

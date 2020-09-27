@@ -1,0 +1,50 @@
+#!/bin/bash
+
+DIR="$1"
+
+[ "$DIR" == "" ] && { echo "Usage: $0 /mnt/dir"; exit 1; }
+
+copy_system_boot (){
+	local dir=$1
+	if [ ! -d "$dir/system-boot" ]; then
+		echo "${dir}/system-boot not found, unable to write configs"
+		exit 1
+	fi
+
+	cp -r $(pwd)/system-boot/* $dir/system-boot/	
+
+	echo "system-boot config written"
+}
+
+copy_writable (){
+	local dir=$1
+	if [ ! -d "$dir/writable" ]; then
+		echo "${dir}/writable not found, unable to write configs"
+		exit 1
+	fi
+
+	cp -r $(pwd)/writable/* $dir/writable/	
+
+	echo "writable configs written"
+}
+
+write_configs () {
+	local dir=$1
+	if [ ! -d "$dir" ]; then
+		echo "${dir} does not exist, unable to write configs"
+		exit 1
+	fi
+
+	echo "writing configs to ${dir}"
+	copy_system_boot $dir
+	copy_writable $dir
+	#unmount_bootcc $dir
+}
+
+unmount_bootcc () {
+	umount $1/system-boot
+	umount $1/writable
+	echo "configs written and disk safely unmounted"
+}
+
+write_configs $DIR
