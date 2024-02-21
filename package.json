@@ -28,7 +28,7 @@
   "homepage": "https://github.com/HackerHappyHour/bootcandc#readme",
   "dependencies": {
     "default-gateway": "^6.0.0",
-    "ip": "^1.1.5",
+    "ip": "^1.1.9",
     "yaml": "^1.9.2"
   },
   "type": "module"
